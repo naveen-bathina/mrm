@@ -1,0 +1,6 @@
+@Mrm.Api_HostAddress = http://localhost:5137
+
+GET {{Mrm.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
