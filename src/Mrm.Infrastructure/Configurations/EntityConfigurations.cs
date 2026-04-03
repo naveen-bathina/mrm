@@ -31,3 +31,28 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(u => u.Role).HasConversion<string>();
     }
 }
+
+public class TerritoryConfiguration : IEntityTypeConfiguration<Territory>
+{
+    public void Configure(EntityTypeBuilder<Territory> builder)
+    {
+        builder.HasKey(t => t.Id);
+        builder.Property(t => t.Name).IsRequired().HasMaxLength(200);
+        builder.Property(t => t.Code).IsRequired().HasMaxLength(10);
+        builder.HasIndex(t => t.Code).IsUnique().HasDatabaseName("ix_territories_code");
+    }
+}
+
+public class MovieReleaseConfiguration : IEntityTypeConfiguration<MovieRelease>
+{
+    public void Configure(EntityTypeBuilder<MovieRelease> builder)
+    {
+        builder.HasKey(r => r.Id);
+        builder.HasOne(r => r.Movie).WithMany().HasForeignKey(r => r.MovieId);
+        builder.HasOne(r => r.Territory).WithMany().HasForeignKey(r => r.TerritoryId);
+        // One release date per movie per territory
+        builder.HasIndex(r => new { r.MovieId, r.TerritoryId })
+               .IsUnique()
+               .HasDatabaseName("ix_movie_releases_movie_territory");
+    }
+}
