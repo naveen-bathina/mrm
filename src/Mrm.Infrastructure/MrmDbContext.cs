@@ -8,10 +8,14 @@ public class MrmDbContext(DbContextOptions<MrmDbContext> options) : DbContext(op
 {
     public DbSet<Movie> Movies => Set<Movie>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<Territory> Territories => Set<Territory>();
+    public DbSet<MovieRelease> MovieReleases => Set<MovieRelease>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfiguration(new MovieConfiguration());
         modelBuilder.ApplyConfiguration(new UserConfiguration());
+        modelBuilder.ApplyConfiguration(new TerritoryConfiguration());
+        modelBuilder.ApplyConfiguration(new MovieReleaseConfiguration());
     }
 }

@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Mrm.Api.Auth;
 using Mrm.Api.Movies;
+using Mrm.Api.Releases;
+using Mrm.Api.Territories;
 using Mrm.Infrastructure;
 using Mrm.Infrastructure.Conflicts;
 using Mrm.Infrastructure.Entities;
@@ -16,6 +18,7 @@ builder.Services.AddDbContext<MrmDbContext>(options =>
 
 // Conflict checkers
 builder.Services.AddScoped<TitleConflictChecker>();
+builder.Services.AddScoped<ReleaseConflictChecker>();
 
 // JWT Authentication
 var jwtSection = builder.Configuration.GetSection("Jwt");
@@ -55,6 +58,8 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapMovieEndpoints();
+app.MapTerritoryEndpoints();
+app.MapReleaseEndpoints();
 
 app.Run();
 
