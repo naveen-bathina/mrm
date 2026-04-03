@@ -14,6 +14,11 @@ public class MovieConfiguration : IEntityTypeConfiguration<Movie>
         builder.Property(m => m.Status).HasConversion<string>();
         builder.Property(m => m.CreatedAt).IsRequired();
         builder.Property(m => m.UpdatedAt).IsRequired();
+
+        // Unique constraint enforced at DB level to back the title conflict checker
+        builder.HasIndex(m => new { m.NormalizedTitle, m.ReleaseYear })
+               .IsUnique()
+               .HasDatabaseName("ix_movies_normalized_title_year");
     }
 }
 

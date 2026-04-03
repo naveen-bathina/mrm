@@ -7,6 +7,21 @@ public record CreateMovieRequest(
     int ReleaseYear
 );
 
+public record UpdateMovieRequest(
+    string OriginalTitle,
+    int ReleaseYear
+);
+
+public record ValidateMovieTitleRequest(
+    string OriginalTitle,
+    int ReleaseYear,
+    Guid? ExcludeMovieId = null
+);
+
+public record TransitionMovieRequest(
+    string TargetStatus
+);
+
 public record MovieResponse(
     Guid Id,
     Guid StudioId,

@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Mrm.Api.Auth;
 using Mrm.Api.Movies;
 using Mrm.Infrastructure;
+using Mrm.Infrastructure.Conflicts;
 using Mrm.Infrastructure.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Database
 builder.Services.AddDbContext<MrmDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+
+// Conflict checkers
+builder.Services.AddScoped<TitleConflictChecker>();
 
 // JWT Authentication
 var jwtSection = builder.Configuration.GetSection("Jwt");
